@@ -1,0 +1,38 @@
+# .gitignore
+
+# -----------------
+# 1. Virtual Environment
+# -----------------
+# The folder containing all your project dependencies
+venv/
+.venv/
+env/
+.env/
+
+# -----------------
+# 2. Python Bytecode/Metadata
+# -----------------
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# -----------------
+# 3. IDE and OS Files
+# -----------------
+# Thumbs.db, .DS_Store (macOS system files)
+*~
+.DS_Store
+Thumbs.db
+
+# -----------------
+# 4. OSMNx and Logging/Data Files
+# -----------------
+# OSMNx cache folder (often very large)
+.cache/
+osmnx_cache/
+
+# Any specific log files you create
+*.log
+
+# Folium/Map output files (if saved locally)
+map_output.html
