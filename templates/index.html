@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Route Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <div class="container">
+        <h1><a href="/" style="text-decoration: none; color: inherit;">🚗 Real-Time Traffic Route Optimizer</a></h1> 
+        <p>Enter a location and addresses to find and compare optimized routes. Traffic data is simulated unless a valid TomTom API key is provided in <code>src/config.py</code>.</p>
+        
+        <form id="route-form" method="POST" action="/">
+            <input type="text" name="place_name" id="place_name" placeholder="Location (e.g., Chennai, India)" value="{{ place_name }}" required>
+            <input type="text" name="departure_address" id="departure_address" placeholder="Departure Address (e.g., Central Station)" value="{{ departure_address }}" required>
+            <input type="text" name="destination_address" id="destination_address" placeholder="Destination Address (e.g., Marina Beach)" value="{{ destination_address }}" required>
+            <button type="submit" id="submit-btn">Generate Routes & Map</button>
+        </form>
+        <p id="form-error" class="error hidden"></p>
+
+        <div class="output-section">
+            {% if routes_summary %}
+                <h2>Route Options Summary</h2>
+                <div class="route-info">
+                    {% for route in routes_summary %}
+                    <div class="route-card">
+                        <h3>{{ route.label }}</h3>
+                        <p><strong>Time:</strong> {{ route.time_min }} min</p>
+                        <p><strong>Distance:</strong> {{ route.distance_km }} km</p>
+                        <p><strong>Avg Traffic Score:</strong> {{ route.avg_traffic }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if result_html %}
+                <div id="map-output">{{ result_html | safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+</body>
+</html>

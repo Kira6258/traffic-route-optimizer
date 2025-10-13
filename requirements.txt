@@ -1,0 +1,7 @@
+gradio
+osmnx
+networkx
+folium
+requests
+geopy
+pyngrok
