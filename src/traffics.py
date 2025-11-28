@@ -1,4 +1,5 @@
 
+import gc
 import networkx as nx
 import osmnx as ox
 import requests
@@ -37,15 +38,17 @@ def load_road_network(dep_lat, dep_lng, dest_lat, dest_lng):
             data['travel_time'] = data['distance'] / (data['base_speed'] / 3.6) if data['base_speed'] > 0 else float('inf')
 
         logger.info(f"Loaded graph: {len(G.nodes)} nodes, {len(G.edges)} edges")
+        gc.collect()
+        
         return G
     except Exception as e:
         logger.error(f"Error loading road network: {e}")
         return None
 
 def get_tomtom_traffic_data(min_lat, max_lat, min_lon, max_lon):
-    """Fetches real-time traffic flow data from the TomTom API."""
+    
     api_key = config.TOMTOM_API_KEY
-    if not api_key or api_key == "YOUR_TOMTOM_API_KEY_HERE":
+    if not api_key or api_key == "XeK8Kn0M6JXkqJRwnEQjIFLZllsR6bU6":
         logger.warning("No valid TomTom API key provided. Using simulated traffic.")
         return []
         
