@@ -8,5 +8,5 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 if __name__ == "__main__":
     app = create_app()
     print("🚀 Starting Flask application...")
-    # The 'create_app' function sets the template path to '../templates' correctly.
+    
     app.run(debug=True)

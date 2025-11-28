@@ -3,7 +3,7 @@ import os
 
 # --- API Keys ---
 
-TOMTOM_API_KEY = os.environ.get("TOMTOM_API_KEY", "YOUR_TOMTOM_API_KEY_HERE")
+TOMTOM_API_KEY = os.environ.get("TOMTOM_API_KEY", "XeK8Kn0M6JXkqJRwnEQjIFLZllsR6bU6")
 
 # --- Default App Settings ---
 DEFAULT_PLACE = "Chennai, India"
