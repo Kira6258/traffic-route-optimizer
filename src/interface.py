@@ -1,4 +1,3 @@
-
 import logging
 from flask import Flask, render_template, request
 import osmnx as ox
@@ -9,7 +8,10 @@ logger = logging.getLogger(__name__)
 
 def create_app():
     """Application factory function."""
-    app = Flask(__name__, template_folder='../templates')
+    app = Flask(__name__, 
+                template_folder='../templates',
+                static_folder='static')  
+    
     app.config.from_object(config)
     
     @app.route("/", methods=["GET", "POST"])
@@ -72,9 +74,8 @@ def create_app():
 
                                         label, path, time_s, distance_m, traffic_score, _ = route_data
 
-                                        if not path: continue # Skip if path is an empty list
-
-                                        # Now continue with the summary calculation
+                                        if not path: continue 
+                                        
                                         time_min = time_s / 60
                                         distance_km = distance_m / 1000
                                         avg_traffic = traffic_score / (len(path) - 1) if len(path) > 1 else 0
@@ -89,13 +90,13 @@ def create_app():
                                     
                                     # 8. Generate Map
                                     map_html = visualization.visualize_traffic_clean(G, routes_data)
-                                    result_html = f"{map_html}" # Map will be displayed below the summary
+                                    result_html = f"{map_html}" 
 
             except Exception as e:
                 logger.error(f"Main processing error: {e}")
                 result_html = f"<p class='error'>An unexpected error occurred: {str(e)}. Please check your inputs and try again.</p>"
 
-        # 9. Render the template
+       
         return render_template(
             'index.html', 
             result_html=result_html, 

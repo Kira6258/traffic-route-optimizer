@@ -6,10 +6,11 @@
     <title>Traffic Route Optimizer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 </head>
+
 <body>
     <div class="container">
         <h1><a href="/" style="text-decoration: none; color: inherit;">🚗 Real-Time Traffic Route Optimizer</a></h1> 
-        <p>Enter a location and addresses to find and compare optimized routes. Traffic data is simulated unless a valid TomTom API key is provided in <code>src/config.py</code>.</p>
+        <p>Enter a location and addresses to find and compare optimized routes.</p>
         
         <form id="route-form" method="POST" action="/">
             <input type="text" name="place_name" id="place_name" placeholder="Location (e.g., Chennai, India)" value="{{ place_name }}" required>
