@@ -1,4 +1,5 @@
 
+from functools import lru_cache
 import gc
 import networkx as nx
 import osmnx as ox
@@ -16,6 +17,8 @@ ox.settings.log_console = False
 ox.settings.use_cache = True
 ox.settings.timeout = 600
 
+@lru_cache(maxsize=10)
+
 def load_road_network(dep_lat, dep_lng, dest_lat, dest_lng):
     """Loads the road network graph from OSM based on the route bounding box."""
     try:
@@ -24,7 +27,7 @@ def load_road_network(dep_lat, dep_lng, dest_lat, dest_lng):
         
         # Calculate a reasonable distance buffer
         dist_m = utils.haversine(dep_lat, dep_lng, dest_lat, dest_lng)
-        dist_buffer = dist_m * 0.75 + 5000 # 75% of the straight distance + 5km buffer
+        dist_buffer = min(max(dist_m * 0.8, 3000), 8000) 
 
         # Load graph
         G = ox.graph_from_point((center_lat, center_lng), dist=int(dist_buffer), network_type='drive', simplify=True)
