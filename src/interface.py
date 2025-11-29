@@ -42,7 +42,7 @@ def create_app():
                         dest_lat, dest_lng = dest_coords
 
                         # 4. Load Road Network and Initialize Traffic
-                        G = traffics.load_road_network(dep_lat, dep_lng, dest_lat, dest_lng)
+                        G = traffics.load_road_network(dep_lat, dep_lng, dest_lat, dest_lng, place_name)
                         
                         if G is None:
                             result_html = "<p class='error'>Error loading road network. The area might be too large or too remote.</p>"

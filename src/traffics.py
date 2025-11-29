@@ -19,34 +19,10 @@ ox.settings.timeout = 600
 
 @lru_cache(maxsize=10)
 
-def load_road_network(dep_lat, dep_lng, dest_lat, dest_lng):
-    """Loads the road network graph from OSM based on the route bounding box."""
-    try:
-        center_lat = (dep_lat + dest_lat) / 2
-        center_lng = (dep_lng + dest_lng) / 2
-        
-        # Calculate a reasonable distance buffer
-        dist_m = utils.haversine(dep_lat, dep_lng, dest_lat, dest_lng)
-        dist_buffer = min(max(dist_m * 0.8, 3000), 8000) 
-
-        # Load graph
-        G = ox.graph_from_point((center_lat, center_lng), dist=int(dist_buffer), network_type='drive', simplify=True)
-        if 'crs' not in G.graph: G.graph['crs'] = ox.settings.default_crs
-        
-        # Basic edge initialization (distance, base speed, time)
-        for u, v, key, data in G.edges(keys=True, data=True):
-            data['base_speed'] = utils.get_base_speed(data)
-            data['distance'] = data.get('length', float('inf'))
-            # Base travel time in seconds
-            data['travel_time'] = data['distance'] / (data['base_speed'] / 3.6) if data['base_speed'] > 0 else float('inf')
-
-        logger.info(f"Loaded graph: {len(G.nodes)} nodes, {len(G.edges)} edges")
-        gc.collect()
-        
-        return G
-    except Exception as e:
-        logger.error(f"Error loading road network: {e}")
-        return None
+def load_road_network(dep_lat, dep_lng, dest_lat, dest_lng, place_name):
+    
+    from .map_cache import map_cache
+    return map_cache.get_city_map(place_name)
 
 def get_tomtom_traffic_data(min_lat, max_lat, min_lon, max_lon):
     
